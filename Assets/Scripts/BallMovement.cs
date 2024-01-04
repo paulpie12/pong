@@ -12,9 +12,11 @@ public class BallMovement : MonoBehaviour
 
     private int hitCounter;
     private Rigidbody2D rb;
+    Renderer Ren;
 
     void Start()
     {
+        Ren = GetComponent<Renderer>();
         rb = GetComponent<Rigidbody2D>();
         Invoke("StartBall", 2f);
     }
@@ -31,6 +33,7 @@ public class BallMovement : MonoBehaviour
 
     private void ResetBall()
     {
+        Ren.material.color = Color.white;
         rb.velocity = new Vector2(0, 0);
         transform.position = new Vector2(0, 0);
         hitCounter = 0;
@@ -63,16 +66,21 @@ public class BallMovement : MonoBehaviour
         if(collision.gameObject.name == "Player" || collision.gameObject.name == "AI")
         {
             PlayerBounce(collision.transform);
+            //color change
+            Color randomcolor = new Color(Random.value, Random.value, Random.value);
+            Ren.material.color = randomcolor;
+            GameObject Explosion = Instantiate(ExplosionAll, position, Quaternion.identity);
+            Explosion.GetComponent<ParticleSystem>().Play();
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(transform.position.x > 0)
+        if (transform.position.x > 0)
         {
             ResetBall();
             PlayerScore.text = (int.Parse(PlayerScore.text) + 1).ToString();
         }
-        else if(transform.position.x < 0)
+        else if (transform.position.x < 0)
         {
             ResetBall();
             AIScore.text = (int.Parse(AIScore.text) + 1).ToString();
