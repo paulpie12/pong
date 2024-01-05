@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 104635207}
   - component: {fileID: 104635206}
   m_Layer: 0
-  m_Name: Explosion
+  m_Name: ParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -394,7 +394,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -5113,7 +5113,6 @@ GameObject:
   - component: {fileID: 301501012}
   - component: {fileID: 301501011}
   - component: {fileID: 301501015}
-  - component: {fileID: 301501016}
   m_Layer: 0
   m_Name: Basic Ball
   m_TagString: Untagged
@@ -5267,18 +5266,6 @@ MonoBehaviour:
   SpeedIncrease: 0.25
   PlayerScore: {fileID: 308551716}
   AIScore: {fileID: 386558854}
---- !u!114 &301501016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 301501010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eab2274ea2690441b53561e0d310275, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &308551714
 GameObject:
   m_ObjectHideFlags: 0

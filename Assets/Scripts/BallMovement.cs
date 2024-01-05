@@ -69,8 +69,8 @@ public class BallMovement : MonoBehaviour
             //color change
             Color randomcolor = new Color(Random.value, Random.value, Random.value);
             Ren.material.color = randomcolor;
-            GameObject Explosion = Instantiate(ExplosionAll, position, Quaternion.identity);
-            Explosion.GetComponent<ParticleSystem>().Play();
+            //ParticleSystem particle = (ParticleSystem)gameObject.GetComponent("ParticleSystem");
+           // ParticleSystem.Play();
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
