@@ -13,7 +13,6 @@ public class BallMovement : MonoBehaviour
     private int hitCounter;
     private Rigidbody2D rb;
     Renderer Ren;
-
     void Start()
     {
         Ren = GetComponent<Renderer>();
@@ -38,6 +37,7 @@ public class BallMovement : MonoBehaviour
         transform.position = new Vector2(0, 0);
         hitCounter = 0;
         Invoke("StartBall", 2f);
+
     }
     private void PlayerBounce(Transform myObject)
     {
@@ -63,27 +63,47 @@ public class BallMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "Player" || collision.gameObject.name == "AI")
+        if (collision.gameObject.name == "Player" || collision.gameObject.name == "AI")
         {
+            if (collision.gameObject.name == "PlayerGoal")
+            {
+                ParticleSystem ps = GameObject.Find("Explosion").GetComponent<ParticleSystem>();
+                ps.transform.Rotate(0, 0, 0);
+                ps.Play();
+                Debug.Log("hit");
+            }
+            else if (collision.gameObject.name == "AiGoal")
+            {
+                ParticleSystem ps = GameObject.Find("Explosion").GetComponent<ParticleSystem>();
+                ps.transform.Rotate(0, 0, -180);
+                ps.Play();
+            }
             PlayerBounce(collision.transform);
             //color change
             Color randomcolor = new Color(Random.value, Random.value, Random.value);
             Ren.material.color = randomcolor;
-            //ParticleSystem particle = (ParticleSystem)gameObject.GetComponent("ParticleSystem");
-           // ParticleSystem.Play();
         }
+
+ 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (transform.position.x > 0)
         {
+            //ParticleSystem ps = GameObject.Find("Explosion").GetComponent<ParticleSystem>();
+            //ps.transform.Rotate(0, 0, 0);
+            //ps.Play();
             ResetBall();
             PlayerScore.text = (int.Parse(PlayerScore.text) + 1).ToString();
         }
         else if (transform.position.x < 0)
         {
+            //ParticleSystem ps = GameObject.Find("Explosion").GetComponent<ParticleSystem>();
+            //ps.transform.Rotate(0, 0, -180);
+           // ps.Play();
             ResetBall();
             AIScore.text = (int.Parse(AIScore.text) + 1).ToString();
         }
     }
+
 }
