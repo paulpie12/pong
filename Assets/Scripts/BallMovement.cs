@@ -13,6 +13,7 @@ public class BallMovement : MonoBehaviour
     private int hitCounter;
     private Rigidbody2D rb;
     Renderer Ren;
+    public GameObject ball;
     void Start()
     {
         Ren = GetComponent<Renderer>();
@@ -32,6 +33,7 @@ public class BallMovement : MonoBehaviour
 
     private void ResetBall()
     {
+        ball.SetActive(true);
         Ren.material.color = Color.white;
         rb.velocity = new Vector2(0, 0);
         transform.position = new Vector2(0, 0);
@@ -65,19 +67,7 @@ public class BallMovement : MonoBehaviour
     {
         if (collision.gameObject.name == "Player" || collision.gameObject.name == "AI")
         {
-            if (collision.gameObject.name == "PlayerGoal")
-            {
-                ParticleSystem ps = GameObject.Find("Explosion").GetComponent<ParticleSystem>();
-                ps.transform.Rotate(0, 0, 0);
-                ps.Play();
-                Debug.Log("hit");
-            }
-            else if (collision.gameObject.name == "AiGoal")
-            {
-                ParticleSystem ps = GameObject.Find("Explosion").GetComponent<ParticleSystem>();
-                ps.transform.Rotate(0, 0, -180);
-                ps.Play();
-            }
+
             PlayerBounce(collision.transform);
             //color change
             Color randomcolor = new Color(Random.value, Random.value, Random.value);
@@ -90,20 +80,35 @@ public class BallMovement : MonoBehaviour
     {
         if (transform.position.x > 0)
         {
-            //ParticleSystem ps = GameObject.Find("Explosion").GetComponent<ParticleSystem>();
-            //ps.transform.Rotate(0, 0, 0);
-            //ps.Play();
-            ResetBall();
+            Partsystem();
             PlayerScore.text = (int.Parse(PlayerScore.text) + 1).ToString();
         }
         else if (transform.position.x < 0)
         {
-            //ParticleSystem ps = GameObject.Find("Explosion").GetComponent<ParticleSystem>();
-            //ps.transform.Rotate(0, 0, -180);
-           // ps.Play();
-            ResetBall();
+            Partsystem();
             AIScore.text = (int.Parse(AIScore.text) + 1).ToString();
         }
+    }
+    private void Partsystem()
+    {
+        ParticleSystem ps = GameObject.Find("Explosion").GetComponent<ParticleSystem>();
+
+        if (transform.position.x > 0)
+        {
+            ps.transform.Rotate(0, 0, -180);
+            ps.Play();
+            Ren.material.color = Color.clear;
+            Invoke("ResetBall", 1f);
+        }
+        else if (transform.position.x < 0)
+        {
+            ps.transform.Rotate(0, 0, 0);
+            ps.Play();
+            Ren.material.color = Color.clear;
+            Invoke("ResetBall", 1f);
+        }
+
+
     }
 
 }
